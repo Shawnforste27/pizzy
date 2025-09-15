@@ -18,8 +18,7 @@ const server=http.createServer(app)
 const io = new Server(server, {
   cors: {
     origin: [
-      "http://localhost:5173",
-      "https://pizza-striker.netlify.app"
+      "https://pizza-striker-iw9l.onrender.com"
     ],
     methods: ["GET", "POST"],
     credentials: true
@@ -28,8 +27,7 @@ const io = new Server(server, {
 app.set("io", io);
 app.use(cors({
     origin: [
-        "http://localhost:5173", 
-        "https://pizza-striker.netlify.app" 
+"https://pizza-striker-iw9l.onrender.com"
     ],
     credentials: true
 }));
