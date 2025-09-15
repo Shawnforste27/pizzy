@@ -15,10 +15,10 @@ import {
   CartesianGrid,
 } from "recharts";
 
-const PRIMARY = "#347928";      // Deep green
-const SECONDARY = "#556B2F";    // Olive green
-const CARD_BG = "#F4E7E1";      // Warm beige
-const PAGE_BG = "#FAF7F3";      // Light cream
+const PRIMARY = "#347928";     
+const SECONDARY = "#556B2F";    
+const CARD_BG = "#F4E7E1";      
+const PAGE_BG = "#FAF7F3";     
 
 export default function DeliveryBoy() {
   const [location, setLocation] = useState({ lat: null, lng: null });
