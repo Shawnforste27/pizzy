@@ -10,8 +10,8 @@ const firebaseConfig = {
  authDomain: "vingoauth.firebaseapp.com",
   projectId: "vingoauth",
   storageBucket: "vingoauth.firebasestorage.app",
-  messagingSenderId: "477598038061",
-  appId: "1:477598038061:web:19fd086a875cef409d20a4"
+  messagingSenderId: "760412581696",
+  appId: "1:760412581696:web:d68c2a299f525372c014a5"
 };
 
 // Initialize Firebase
