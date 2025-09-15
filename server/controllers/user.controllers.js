@@ -16,11 +16,11 @@ export const getCurrentUser=async (req,res)=>{
     }
 }
 
-// controllers/location.controller.j
+
 export const updateUserLocation = async (req, res) => {
   try {
     const { latitude, longitude } = req.body;
-    const userId = req.userId; // JWT middleware se
+    const userId = req.userId; 
 
     if (typeof latitude !== "number" || typeof longitude !== "number") {
       return res.status(400).json({
@@ -29,7 +29,7 @@ export const updateUserLocation = async (req, res) => {
       });
     }
 
-    // DB me user ki location update karo
+ 
     await User.findByIdAndUpdate(userId, {
       location: {
         type: "Point",
@@ -37,7 +37,7 @@ export const updateUserLocation = async (req, res) => {
       }
     },{new:true});
 
-    // Socket se broadcast karo (agar real-time chahiye)
+ 
     const io = req.app.get("io");
     if (io) {
       io.emit("user:location:update", {
@@ -76,19 +76,19 @@ export const searchItems = async (req, res) => {
       return res.status(400).json({ message: "City is required" });
     }
 
-    // पहले उस city के सारे shop IDs निकालो
+
     const shopsInCity = await Shop.find({
   city: { $regex: new RegExp(`^${city}$`, "i") }
 });
 
 
     if (shopsInCity.length === 0) {
-      return res.status(200).json([]); // उस city में कोई shop नहीं
+      return res.status(200).json([]); 
     }
 
     const shopIds = shopsInCity.map((s) => s._id);
 
-    // अब उन shops के अंदर items filter करो जो query से match करें
+
     const items = await Item.find({
       shop: { $in: shopIds },
       $or: [
