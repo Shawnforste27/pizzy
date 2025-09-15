@@ -17,12 +17,12 @@ export default function SignUp() {
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
 
-  // 🍕 Pizza Striker Theme
-  const primaryColor = "#347928"; // deep green
-  const hoverColor = "#556B2F"; // olive green
-  const bgColor = "#F4E7E1"; // warm beige
+
+  const primaryColor = "#347928"; 
+  const hoverColor = "#556B2F"; 
+  const bgColor = "#F4E7E1"; 
   const borderColor = "#347928";
-  const textColor = "#333"; // dark gray
+  const textColor = "#333"; 
 
   const dispatch = useDispatch();
 
