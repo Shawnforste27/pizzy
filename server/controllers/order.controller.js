@@ -13,7 +13,7 @@ let instance = new Razorpay({
 });
 
 
-// ✅ Place order controller (fixed)
+
 
 
 export const placeOrder = async (req, res) => {
@@ -31,7 +31,7 @@ export const placeOrder = async (req, res) => {
       });
     }
 
-    // 🟢 Group items by shop
+
     const groupedByShop = {};
     cartItems.forEach((item) => {
       const shopId = item.shop;
@@ -39,7 +39,7 @@ export const placeOrder = async (req, res) => {
       groupedByShop[shopId].push(item);
     });
 
-    // 🟢 Shop Orders banao
+
     const shopOrders = await Promise.all(
       Object.keys(groupedByShop).map(async (shopId) => {
         const shop = await Shop.findById(shopId).populate("owner");
@@ -66,16 +66,16 @@ export const placeOrder = async (req, res) => {
       })
     );
 
-    // 🟢 Total + Delivery Fee
+ 
     let totalAmount = shopOrders.reduce((sum, so) => sum + so.subtotal, 0);
    
 
     console.log("✅ Total Amount to charge:", totalAmount);
 
-    // 🟢 Online Payment (Razorpay)
+ 
     if (paymentMethod === "online") {
       const razorOrder = await instance.orders.create({
-        amount: Math.round(totalAmount * 100), // paise me (integer hona chahiye)
+        amount: Math.round(totalAmount * 100), 
         currency: "INR",
         receipt: `receipt_${Date.now()}`,
       });
@@ -98,7 +98,7 @@ export const placeOrder = async (req, res) => {
       });
     }
 
-    // 🟢 COD Order
+
     let newOrder = await Order.create({
       user: req.userId,
       address,
@@ -125,14 +125,13 @@ export const verifyRazorpay = async (req, res) => {
   try {
     const { razorpay_payment_id, orderId } = req.body;
 
-    // 🔹 Razorpay payment fetch
+  
     const payment = await instance.payments.fetch(razorpay_payment_id);
 
     if (!payment || payment.status !== "captured") {
       return res.status(400).json({ success: false, message: "Payment failed or not captured" });
     }
 
-    // 🔹 Update order
     const order = await Order.findById(orderId);
     if (!order) return res.status(404).json({ success: false, message: "Order not found" });
 
@@ -190,17 +189,16 @@ export const getMyOrders = async (req, res) => {
 
 export const getOwnerOrders = async (req, res) => {
   try {
-    const ownerId = req.userId; // Auth middleware se aayega
-
-    // Sabhi orders find karo jisme shopOrders me owner match karta ho
+    const ownerId = req.userId; 
+ 
     const orders = await Order.find({ "shopOrders.owner": ownerId })
     .sort({ createdAt: -1 }) 
-      .populate("user") // Customer info
-      .populate("shopOrders.shop", "name")  // Shop name
+      .populate("user") 
+      .populate("shopOrders.shop", "name")  
       .populate("shopOrders.items.item", "name image")
-      .populate("shopOrders.assignedDeliveryBoy", "fullName mobile");  // Item info
+      .populate("shopOrders.assignedDeliveryBoy", "fullName mobile");  
 
-    // Filter karke sirf owner ke relevant shopOrders bhejna
+    
     const filteredOrders = orders.map(order => ({
       _id: order._id,
       user: order.user,
@@ -261,7 +259,7 @@ export const updateOwnerOrderStatus = async (req, res) => {
           }
         }).select("_id fullName mobile socketId location");
 
-        // busy riders in ONE query
+     
         const nearbyIds = nearby.map(b => b._id);
         const busyIds = await DeliveryAssignment.find({
           assignedTo: { $in: nearbyIds },
@@ -273,7 +271,7 @@ export const updateOwnerOrderStatus = async (req, res) => {
 
         const candidates = availableBoys.map(d => d._id);
 
-        // clear stale deliveryBoyLocation before broadcasting
+   
         shopOrder.deliveryBoyLocation = undefined;
 
         if (candidates.length === 0) {
@@ -288,7 +286,7 @@ export const updateOwnerOrderStatus = async (req, res) => {
           });
         }
 
-        // create assignment
+    
         assignment = await DeliveryAssignment.create({
           order: order._id,
           shop: shopOrder.shop,
@@ -334,7 +332,7 @@ export const updateOwnerOrderStatus = async (req, res) => {
 
     await order.save();
 
-    // repopulate
+
   
 order = await Order.findById(orderId)
   .populate("shopOrders.shop", "name")
@@ -344,7 +342,7 @@ const updatedShopOrder = order.shopOrders.find(
   so => so.shop._id.toString() === shopId
 );
 
-// 🔹 Yahi emit karna hai
+
 const io = req.app.get("io");
 if (io) {
   io.emit("orders:statusUpdated", {
