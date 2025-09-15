@@ -36,12 +36,11 @@ app.use("/api/item",itemRouter)
 app.use("/api/order",orderRouter)
 
 
-app.get("/" , (req , res)=>{
-     res.send({
-          activeStatus:true,
-          
-     })    
-})
+app.get("/", (req, res) => {
+  res.send({
+    activeStatus: true,
+  });
+});
 
 
 socketHandler(io)
