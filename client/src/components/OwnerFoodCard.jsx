@@ -6,9 +6,9 @@ import { serverUrl } from '../App';
 import { useDispatch } from 'react-redux';
 import { setShop } from '../redux/userSlice';
 
-const PRIMARY = "#347928";   // deep green
-const SECONDARY = "#556B2F"; // olive green
-const CARD_BG = "#F4E7E1";   // light beige
+const PRIMARY = "#347928";   
+const SECONDARY = "#556B2F"; 
+const CARD_BG = "#F4E7E1";   
 
 export default function OwnerFoodCard({ item }) {
   const navigate = useNavigate();
