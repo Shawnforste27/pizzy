@@ -27,7 +27,7 @@ import updateLocation from './hooks/updateLocation'
 import TrackOrderPage from './pages/TrackOrderPage'
 import MyDeliveredOrders from './pages/MyDeliveredOrders'
 import ShopItems from './pages/ShopItems'
-export const serverUrl="https://pizza-striker.vercel.app"
+export const serverUrl="https://pizza-striker.onrender.com"
 
 function App() {
   const {userData,allShops,socket}=useSelector(state=>state.user)
