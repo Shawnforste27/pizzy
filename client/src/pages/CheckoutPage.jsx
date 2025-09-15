@@ -10,13 +10,13 @@ import { useNavigate } from "react-router-dom";
 import { serverUrl } from "../App";
 import useCurrentLocation from "../hooks/useCurrentLocation";
 
-// 🌿 Theme Palette
+
 const PRIMARY = "#347928";
 const SECONDARY = "#556B2F";
 const CARD_BG = "#F4E7E1";
 const PAGE_BG = "#FAF7F3";
 
-// Fix Leaflet default icons
+
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -24,7 +24,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png"
 });
 
-// Recenter component for map
+
 function Recenter({ lat, lng }) {
   const map = useMap();
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function CheckoutPage() {
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
 
-  // Sync input with address
+ 
   useEffect(() => {
     if (address) setSearchText(address);
   }, [address]);
@@ -53,7 +53,7 @@ export default function CheckoutPage() {
   const deliveryFee = subtotal > 500 ? 0 : 40;
   const total = subtotal + deliveryFee;
 
-  // Forward Geocoding
+
   const GEOAPIFY_API_KEY = "812d749999de462e9df7ca070383975b";
   const forwardGeocode = async (addr) => {
     if (typeof addr !== "string" || !addr.trim()) return;
