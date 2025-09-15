@@ -5,10 +5,10 @@ import L from "leaflet";
 import home from "../assets/home.png";
 import scooter from "../assets/scooter.png";
 
-// ✅ Theme color
+
 const PATH_COLOR = "#347928"; // Green theme
 
-// ✅ Custom icons
+
 const deliveryBoyIcon = new L.Icon({
   iconUrl: scooter,
   iconSize: [40, 40],
@@ -24,7 +24,7 @@ const customerIcon = new L.Icon({
 export default function DeliveryBoyTracking({ currentOrder }) {
   if (!currentOrder) return <p className="text-gray-500">No current active order</p>;
 
-  // ✅ Get coords safely
+
   const deliveryLat = currentOrder?.deliveryBoyLocation?.lat;
   const deliveryLng = currentOrder?.deliveryBoyLocation?.lng;
   const customerLat = currentOrder?.customer?.lat;
@@ -33,7 +33,7 @@ export default function DeliveryBoyTracking({ currentOrder }) {
   const center =
     deliveryLat && deliveryLng ? [deliveryLat, deliveryLng] : [28.6139, 77.209];
 
-  // ✅ Path between delivery boy and customer
+
   const path =
     deliveryLat && deliveryLng && customerLat && customerLng
       ? [
